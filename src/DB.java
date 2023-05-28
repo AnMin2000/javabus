@@ -35,36 +35,25 @@ public class DB {
         }
         pstmt.executeUpdate();
     }
-    public void print(String selectName, String tableName, int number) throws SQLException {
+    public ResultSet print(String selectName, String tableName, int number) throws SQLException {
 
         String ValuesVar = "?";
-
+        String sql;
         for (int i = 0; i < number - 1; i++) {
             ValuesVar += ", ?";
         }
-        String sql = "SELECT " + selectName + " FROM " + tableName;
-             //   + " WHERE (" + ValuesVar + ")";
+        if (number == 0) {
+            sql = "SELECT " + selectName + " FROM " + tableName;
+        } else {
+            sql = "SELECT " + selectName + " FROM " + tableName + " WHERE (" + ValuesVar + ")";
+        }
+
         pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
 
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        for (int i = 1; i <= columnCount; i++) {
-            System.out.print(metaData.getColumnName(i) + "\t");
-        }
-        System.out.println();
-
-        // 데이터 출력
-        while (rs.next()) {
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print(rs.getString(i) + "\t");
-            }
-            System.out.println();
-        }
-
-
+        return rs;
     }
+
 
     public ResultSet selectUser(String Id) throws SQLException {
         String sql = "select * from dbo.client where userID = ?";
@@ -102,8 +91,5 @@ public class DB {
         JOptionPane.showMessageDialog(null, "로그인 실패");
         return false;
     }
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
-        String []tmp = {"asdf", "else"};
-        new DB().insert("dbo.admin", 2,tmp);
-    }
+
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,9 +28,9 @@ public class Bus {
     private JTextField SearchTextField;
     private JTextField StratT;
     private JTextField EndT;
-
-    public Bus() {
-
+    String tmp;
+    public Bus() throws SQLException, ClassNotFoundException {
+        DB connect = new DB();
 
         JFrame c = new JFrame();
         c.setSize(500, 500);
@@ -39,12 +40,17 @@ public class Bus {
 
         DefaultListModel model = new DefaultListModel();
 
+
+        ResultSet rs = connect.print("*", "bus", 0);
+
+        while (rs.next()){
+        model.addElement(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3) + " " + rs.getString(4)+ " " + rs.getString(5));
+        }
+        AddrerssList.setModel(model);
         AppendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DB connect = new DB();
-                    connect.print("*", "bus", 5);
                     String VBusNum = BusNum.getText();   // 안민
                     String VStartRe = StartRe.getText(); // 1번
                     String VEndRe = EndRe.getText();
@@ -68,12 +74,11 @@ public class Bus {
 
                     String[] PrArr = new String[]{VBusNum, VStartRe, VEndRe, formattedStartT, formattedEndT};
                     connect.insert("bus", 5, PrArr);
-                    connect.print("*", "bus", 5);
 
-                   // model.addElement(tmp);
+                    ResultSet rs = connect.print("*", "bus", 0);
+
+                    model.addElement(VBusNum + " " + VStartRe + " " + VEndRe + " " + VStartT + " " + VEndT);
                     AddrerssList.setModel(model);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ParseException ex) {
@@ -131,7 +136,7 @@ public class Bus {
 
         c.setVisible(true);
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         new Bus();
     }
 }
