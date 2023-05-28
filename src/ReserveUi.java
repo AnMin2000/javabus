@@ -1,11 +1,16 @@
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 
-public class ReserveUi extends JPanel{
+public class ReserveUi {
 
     private JPanel panel1;
     private JPanel Look;
@@ -19,7 +24,8 @@ public class ReserveUi extends JPanel{
     EtchedBorder eborder;
 
 
-    ReserveUi(){
+    ReserveUi() throws SQLException, ClassNotFoundException {
+        DB connect = new DB();
         JFrame c = new JFrame();
         c.setSize(300, 350);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,6 +33,12 @@ public class ReserveUi extends JPanel{
         c.setTitle("버스 예매 프로그램");
 
         DefaultListModel model = new DefaultListModel();
+        ResultSet rs = connect.print("*", "bus", 0);
+
+        while (rs.next()) {
+            model.addElement(rs.getString(2));
+        }
+        AddrerssList.setModel(model);
         SortButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,7 +48,7 @@ public class ReserveUi extends JPanel{
 
                 Arrays.sort(objectArray);
 
-                for(Object element : objectArray){
+                for (Object element : objectArray) {
                     SortedModel.addElement(element);
                 }
                 AddrerssList.setModel(SortedModel);
@@ -47,22 +59,24 @@ public class ReserveUi extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultListModel SearchModel = new DefaultListModel();
-                Object []ListArray = model.toArray();
+                Object[] ListArray = model.toArray();
                 String SearchName = SearchTextField.getText();
-                String []tmp = new String[ListArray.length];
-                for(int i = 0; i< ListArray.length;i++)
+                String[] tmp = new String[ListArray.length];
+                for (int i = 0; i < ListArray.length; i++)
                     tmp[i] = (String) ListArray[i];
 
 
-                for(int i =0; i<tmp.length; i++) {
-                    if (tmp[i].indexOf(SearchName) != -1){
+                for (int i = 0; i < tmp.length; i++) {
+                    if (tmp[i].indexOf(SearchName) != -1) {
                         SearchModel.addElement(tmp[i]);
                     }
                 }
-                // AddrerssList.setModel(model);
+                AddrerssList.setModel(model);
                 AddrerssList.setModel(SearchModel);
             }
         });
+
+
         ListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,6 +84,9 @@ public class ReserveUi extends JPanel{
                 AddrerssList.setModel(model);
             }
         });
+        // 검색하기
+
+
 
         c.add(panel1);
         c.setVisible(true);
@@ -77,7 +94,9 @@ public class ReserveUi extends JPanel{
 
 
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         new ReserveUi();
     }
+
+
 }

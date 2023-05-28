@@ -75,7 +75,6 @@ public class Bus {
                     String[] PrArr = new String[]{VBusNum, VStartRe, VEndRe, formattedStartT, formattedEndT};
                     connect.insert("bus", 5, PrArr);
 
-                    ResultSet rs = connect.print("*", "bus", 0);
 
                     model.addElement(VBusNum + " " + VStartRe + " " + VEndRe + " " + VStartT + " " + VEndT);
                     AddrerssList.setModel(model);

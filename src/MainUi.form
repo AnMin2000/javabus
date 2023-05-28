@@ -26,7 +26,9 @@
             <children>
               <component id="57d66" class="javax.swing.JButton" binding="ReserveButton">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="10" height="5"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="고속버스 예매 "/>
@@ -50,7 +52,9 @@
               </component>
               <component id="6616f" class="javax.swing.JButton" binding="ChangeButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="10" height="5"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="변경"/>
@@ -58,7 +62,9 @@
               </component>
               <component id="f47b5" class="javax.swing.JButton" binding="CancleButton">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="10" height="5"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="취소"/>
@@ -66,7 +72,9 @@
               </component>
               <component id="f968d" class="javax.swing.JButton" binding="InquiryButton">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="10" height="5"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="결제 내역 조회"/>
@@ -74,7 +82,9 @@
               </component>
               <component id="f2ad1" class="javax.swing.JButton" binding="ModifyButton">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="10" height="5"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="사용자 정보 수정"/>
