@@ -55,7 +55,7 @@ public class SignUpUi {
                 try {
                     connect.insert("client",4,PrArr);
                     c.dispose();
-                    new MainUi();
+                    new MainUi("NULL");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ParseException ex) {

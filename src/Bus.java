@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -130,6 +131,7 @@ public class Bus {
                 AddrerssList.setModel(model);
             }
         });
+
 
         c.add(panel1);
 

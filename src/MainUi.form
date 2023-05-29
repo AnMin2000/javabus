@@ -26,7 +26,7 @@
             <children>
               <component id="57d66" class="javax.swing.JButton" binding="ReserveButton">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false">
                     <preferred-size width="10" height="5"/>
                   </grid>
                 </constraints>

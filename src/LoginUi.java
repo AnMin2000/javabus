@@ -31,7 +31,7 @@ public class LoginUi {
 
                     if(state == true){
                         c.dispose();
-                        new MainUi();
+                        new MainUi(UserId);
 
                     }
                     else {
