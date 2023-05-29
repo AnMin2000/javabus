@@ -15,6 +15,7 @@ public class DB {
                         + "database=Bus;"
                         + "trustServerCertificate=true;";
         conn = DriverManager.getConnection(connectionUrl);
+
     }
     public void insert(String name, int number, String[] PrName) throws SQLException, ParseException {
         //name : 테이블 이름, number : 해당 디비 컬럼 갯수, PrName : 디비에 입력 할 값들

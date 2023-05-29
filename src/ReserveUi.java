@@ -19,7 +19,10 @@ public class ReserveUi {
     private JTextField SearchTextField;
     private JLabel JName;
     private JLabel one;
+    String startRE;
+    String endRe;
 
+    int addressCount = 0;
 
     ReserveUi(String userID) throws SQLException, ClassNotFoundException {
 
@@ -33,7 +36,6 @@ public class ReserveUi {
 
         DefaultListModel model = new DefaultListModel();
         ResultSet rs = connect.print("*", "bus", 0);
-        ResultSet rs2 = connect.print("*", "bus", 0);
 
         while (rs.next()) {
             model.addElement(rs.getString(2));
@@ -77,8 +79,6 @@ public class ReserveUi {
                 AddrerssList.setModel(SearchModel);
             }
         });
-
-
         ListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,30 +90,50 @@ public class ReserveUi {
         AddrerssList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-               int i = 0;
+
                 if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
                     String selectedValue = (String) AddrerssList.getSelectedValue();
-                    // 한번 클릭 했을 때만 출발지 -> 도착지로 바뀌게 코딩
-                    if(i==0) {
+
+                    if(addressCount == 1){ // 도착지 선택시
+                        endRe = (String) AddrerssList.getSelectedValue();
+
+                        /////////////////////////////////////////////////////////////////////////////
+                        try {
+                            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    c.dispose();
+                                    new Calendar(userID, startRE, endRe);//
+                                }
+                            });
+                        } catch (Exception c) {
+                            c.printStackTrace();
+                        }
+                        //////////////////////////////////////////////////////////////////////////////
+                    }
+                    else if(addressCount == 0) { // 출발지 선택시
+                        startRE = (String) AddrerssList.getSelectedValue();
                         model.clear();
-                        i++;
+                        addressCount++;
                     }
                     try {
                         //출발지와 도착지가 같지 않을 경우만 출력
-                    while (rs2.next()) {
-                        if(!selectedValue.equals(rs2.getString(3))) {
-                            model.addElement(rs2.getString(3));
+                        ResultSet rs = connect.print("*", "bus", 0);
+                        while (rs.next()) {
+                            if(!selectedValue.equals(rs.getString(3))) {
+                                model.addElement(rs.getString(3));
+                            }
                         }
-                    }
                         AddrerssList.setModel(model);
                     } catch (SQLException ex) {
                            throw new RuntimeException(ex);
-                        }
-
                     }
-                }
 
-            });
+                }
+            }
+
+        });
             c.add(panel1);
             c.setVisible(true);
 
