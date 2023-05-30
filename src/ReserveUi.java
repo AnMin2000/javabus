@@ -35,10 +35,11 @@ public class ReserveUi {
         c.setTitle("버스 예매 프로그램");
 
         DefaultListModel model = new DefaultListModel();
-        ResultSet rs = connect.print("*", "bus", 0);
+        ResultSet rs = connect.print(" distinct startRegion ", " bus ");
 
         while (rs.next()) {
-            model.addElement(rs.getString(2));
+            model.addElement(rs.getString(1));
+            System.out.println(rs.getString(1));
         }
       //  rs.beforeFirst();
         AddrerssList.setModel(model);
@@ -93,46 +94,22 @@ public class ReserveUi {
 
                 if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
                     String selectedValue = (String) AddrerssList.getSelectedValue();
-
-                    if(addressCount == 1){ // 도착지 선택시
-                        endRe = (String) AddrerssList.getSelectedValue();
-
-                        /////////////////////////////////////////////////////////////////////////////
-                        try {
-                            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    c.dispose();
-                                    new Calendar(userID, startRE, endRe);//
-                                }
-                            });
-                        } catch (Exception c) {
-                            c.printStackTrace();
-                        }
-                        //////////////////////////////////////////////////////////////////////////////
-                    }
-                    else if(addressCount == 0) { // 출발지 선택시
-                        startRE = (String) AddrerssList.getSelectedValue();
-                        model.clear();
-                        addressCount++;
-                    }
+                    System.out.println(selectedValue);
                     try {
-                        //출발지와 도착지가 같지 않을 경우만 출력
-                        ResultSet rs = connect.print("*", "bus", 0);
+                        
+                        // 여기서 같은 행 출력 해야 됨
+
+                        ResultSet rs = connect.print("*", "bus"); // 이거 수정
                         while (rs.next()) {
-                            if(!selectedValue.equals(rs.getString(3))) {
-                                model.addElement(rs.getString(3));
-                            }
+                            model.addElement(rs.getString(3));
                         }
-                        AddrerssList.setModel(model);
+
                     } catch (SQLException ex) {
-                           throw new RuntimeException(ex);
+                        throw new RuntimeException(ex);
                     }
 
                 }
             }
-
         });
             c.add(panel1);
             c.setVisible(true);

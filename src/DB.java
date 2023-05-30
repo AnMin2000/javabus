@@ -36,19 +36,10 @@ public class DB {
         }
         pstmt.executeUpdate();
     }
-    public ResultSet print(String selectName, String tableName, int number) throws SQLException {
+    public ResultSet print(String selectName, String tableName) throws SQLException {
 
-        String ValuesVar = "?";
         String sql;
-        for (int i = 0; i < number - 1; i++) {
-            ValuesVar += ", ?";
-        }
-        if (number == 0) {
-            sql = "SELECT " + selectName + " FROM " + tableName;
-        } else {
-            sql = "SELECT " + selectName + " FROM " + tableName + " WHERE (" + ValuesVar + ")";
-        }
-
+        sql = "SELECT " + selectName + " FROM " + tableName;
         pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
 

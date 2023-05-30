@@ -126,7 +126,7 @@ public class Calendar extends JFrame {
                     if (!selectedDate.isBefore(currentDate)) {
                         System.out.println("선택된 날짜: " + selectedDate);
                         dispose();
-                        // new (userID, startRe, endRe, selectedDate) 던져주기
+                        // new Time(userID, startRe, endRe, selectedDate); 던져주기
                         // 원하는 동작을 수행하도록 구현하세요.
                     }
                     ////////////////////////////////////////////////////////////////////////

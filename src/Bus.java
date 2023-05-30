@@ -34,18 +34,18 @@ public class Bus {
         DB connect = new DB();
 
         JFrame c = new JFrame();
-        c.setSize(500, 500);
+        c.setSize(800, 500);
+
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocation(550, 180);
 
 
         DefaultListModel model = new DefaultListModel();
 
-
-        ResultSet rs = connect.print("*", "bus", 0);
+        ResultSet rs = connect.print(" distinct startRegion ", " bus ");
 
         while (rs.next()){
-        model.addElement(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3) + " " + rs.getString(4)+ " " + rs.getString(5));
+        model.addElement(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4)+ " " + rs.getString(5));
         }
         AddrerssList.setModel(model);
         AppendButton.addActionListener(new ActionListener() {
