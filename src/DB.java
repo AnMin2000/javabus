@@ -36,11 +36,20 @@ public class DB {
         }
         pstmt.executeUpdate();
     }
-    public ResultSet print(String selectName, String tableName) throws SQLException {
+    public ResultSet print(String selectName, String tableName, String sqlName, String data ) throws SQLException {
+
+        String ValuesVar = "?";
 
         String sql;
-        sql = "SELECT " + selectName + " FROM " + tableName;
-        pstmt = conn.prepareStatement(sql);
+        if(sqlName.equals("Null")) {
+            sql = "SELECT " + selectName + " FROM " + tableName;
+            pstmt = conn.prepareStatement(sql);
+        }
+        else{
+            sql = "SELECT " + selectName + " FROM " + tableName + " WHERE " + sqlName + " = " +  "?" ;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, data);
+        }
         ResultSet rs = pstmt.executeQuery();
 
         return rs;

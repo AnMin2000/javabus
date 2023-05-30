@@ -35,7 +35,7 @@ public class ReserveUi {
         c.setTitle("버스 예매 프로그램");
 
         DefaultListModel model = new DefaultListModel();
-        ResultSet rs = connect.print(" distinct startRegion ", " bus ");
+        ResultSet rs = connect.print(" distinct startRegion ", " timetable ", "Null", "Null");
 
         while (rs.next()) {
             model.addElement(rs.getString(1));
@@ -93,17 +93,18 @@ public class ReserveUi {
             public void mouseClicked(MouseEvent e) {
 
                 if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
+                    //model.clear();
                     String selectedValue = (String) AddrerssList.getSelectedValue();
                     System.out.println(selectedValue);
                     try {
-                        
+
                         // 여기서 같은 행 출력 해야 됨
-
-                        ResultSet rs = connect.print("*", "bus"); // 이거 수정
+                        ResultSet rs = connect.print(" distinct endRegion ", "timetable", "startRegion",selectedValue); // 이거 수정
+                        model.clear();
                         while (rs.next()) {
-                            model.addElement(rs.getString(3));
+                            model.addElement(rs.getString(1));
                         }
-
+                        AddrerssList.setModel(model);
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }

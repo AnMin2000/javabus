@@ -29,6 +29,7 @@ public class Bus {
     private JTextField SearchTextField;
     private JTextField StratT;
     private JTextField EndT;
+    private JTextField TimeID;
     String tmp;
     public Bus() throws SQLException, ClassNotFoundException {
         DB connect = new DB();
@@ -42,16 +43,17 @@ public class Bus {
 
         DefaultListModel model = new DefaultListModel();
 
-        ResultSet rs = connect.print(" distinct startRegion ", " bus ");
+        ResultSet rs = connect.print(" * ", " timetable ", "Null", "Null");
 
         while (rs.next()){
-        model.addElement(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4)+ " " + rs.getString(5));
+        model.addElement(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4)+ " " + rs.getString(5) + " " + rs.getString(6));
         }
         AddrerssList.setModel(model);
         AppendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    String VtimeId = TimeID.getText();
                     String VBusNum = BusNum.getText();   // 안민
                     String VStartRe = StartRe.getText(); // 1번
                     String VEndRe = EndRe.getText();
@@ -59,7 +61,6 @@ public class Bus {
                     String VEndT = EndT.getText();
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 
                     Date startDate;
                     Date endDate;
@@ -73,11 +74,11 @@ public class Bus {
                     String formattedStartT = dateFormat.format(startDate);
                     String formattedEndT = dateFormat.format(endDate);
 
-                    String[] PrArr = new String[]{VBusNum, VStartRe, VEndRe, formattedStartT, formattedEndT};
-                    connect.insert("bus", 5, PrArr);
+                    String[] PrArr = new String[]{VtimeId, VBusNum, VStartRe, VEndRe, formattedStartT, formattedEndT};
+                    connect.insert("timetable", 6, PrArr);
 
+                    model.addElement(VtimeId + " " + VBusNum + " " + VStartRe + " " + VEndRe + " " + VStartT + " " + VEndT);
 
-                    model.addElement(VBusNum + " " + VStartRe + " " + VEndRe + " " + VStartT + " " + VEndT);
                     AddrerssList.setModel(model);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
