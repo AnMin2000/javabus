@@ -15,7 +15,6 @@ public class DB {
                         + "database=Bus;"
                         + "trustServerCertificate=true;";
         conn = DriverManager.getConnection(connectionUrl);
-
     }
     public void insert(String name, int number, String[] PrName) throws SQLException, ParseException {
         //name : 테이블 이름, number : 해당 디비 컬럼 갯수, PrName : 디비에 입력 할 값들
@@ -36,7 +35,7 @@ public class DB {
         }
         pstmt.executeUpdate();
     }
-    public ResultSet print(String selectName, String tableName, String sqlName, String data ) throws SQLException {
+    public ResultSet print(String selectName, String tableName, String sqlName, String data, String sqlName2, String data2 ) throws SQLException {
 
         String ValuesVar = "?";
 
@@ -45,10 +44,18 @@ public class DB {
             sql = "SELECT " + selectName + " FROM " + tableName;
             pstmt = conn.prepareStatement(sql);
         }
-        else{
+        else if(sqlName2.equals("Null")){
             sql = "SELECT " + selectName + " FROM " + tableName + " WHERE " + sqlName + " = " +  "?" ;
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, data);
+        }
+        else{
+            sql = "SELECT " + selectName + " FROM " + tableName +
+                    " WHERE " + sqlName + " =  +  ? and " + sqlName2 + " =  + ?";
+//            " = " +  "? and " + sqlName2 + " = " + "?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, data);
+            pstmt.setString(2, data2);
         }
         ResultSet rs = pstmt.executeQuery();
 

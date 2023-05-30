@@ -46,3 +46,32 @@
 //        }
 //
 //        });
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// 검색하기
+//        AddrerssList.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//
+//                if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
+//                    if(addressCount == 1){
+//                        new Calendar(userID,startRe,endRe)
+//                    }
+//                    String selectedValue = (String) AddrerssList.getSelectedValue();
+//                    System.out.println(selectedValue);
+//                    try {
+//
+//                        // 여기서 같은 행 출력 해야 됨
+//                        ResultSet rs = connect.print(" distinct endRegion ", "timetable", "startRegion",selectedValue); // 이거 수정
+//                        model.clear();
+//                        while (rs.next()) {
+//                            model.addElement(rs.getString(1));
+//                        }
+//                        AddrerssList.setModel(model);
+//                    } catch (SQLException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+//
+//                }
+//                addressCount++;
+//            }
+//        });

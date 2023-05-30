@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -36,7 +37,7 @@ public class Calendar extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentYearMonth = currentYearMonth.minusMonths(1);
                 updateMonthLabel(monthLabel);
-                updateCalendarPanel(container);
+                updateCalendarPanel(container, userID, startRe, endRe);
             }
         });
 
@@ -46,7 +47,7 @@ public class Calendar extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentYearMonth = currentYearMonth.plusMonths(1);
                 updateMonthLabel(monthLabel);
-                updateCalendarPanel(container);
+                updateCalendarPanel(container, userID, startRe, endRe);
             }
         });
 
@@ -60,7 +61,7 @@ public class Calendar extends JFrame {
         calendarPanel.setBackground(Color.WHITE);
 
 
-        updateCalendarPanel(container);
+        updateCalendarPanel(container, userID, startRe, endRe);
 
         container.add(monthPanel, BorderLayout.NORTH);
         container.add(calendarPanel, BorderLayout.CENTER);
@@ -73,7 +74,7 @@ public class Calendar extends JFrame {
         label.setText(monthText);
     }
 
-    private void updateCalendarPanel(Container container) {
+    private void updateCalendarPanel(Container container, String userID, String startRe, String endRe) {
         calendarPanel.removeAll();
 
         LocalDate firstDayOfMonth = currentYearMonth.atDay(1);
@@ -117,6 +118,7 @@ public class Calendar extends JFrame {
             dayButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    try {
                     JButton clickedButton = (JButton) e.getSource();
                     int selectedDay = Integer.parseInt(clickedButton.getText());
                     LocalDate selectedDate = currentYearMonth.atDay(selectedDay);
@@ -125,10 +127,18 @@ public class Calendar extends JFrame {
                     LocalDate currentDate = LocalDate.now();
                     if (!selectedDate.isBefore(currentDate)) {
                         System.out.println("선택된 날짜: " + selectedDate);
+                        String tmp = selectedDate.toString(); // 선택 된 날짜 -> String으로 변환
                         dispose();
+                        new Time(userID, startRe, endRe, tmp);
+                        }
                         // new Time(userID, startRe, endRe, selectedDate); 던져주기
                         // 원하는 동작을 수행하도록 구현하세요.
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
+
                     ////////////////////////////////////////////////////////////////////////
                 }
             });

@@ -41,6 +41,6 @@ public class MainUi {
     }
 
     public static void main(String[] args) {
-        new MainUi("Null");
+        new MainUi("dlgywjd");
     }
 }

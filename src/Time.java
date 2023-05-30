@@ -1,5 +1,7 @@
 import javax.swing.*;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Time {
     private JPanel panel1;
@@ -17,7 +19,24 @@ public class Time {
         c.setLocation(550, 180);
         c.setTitle("시간 선택");
 
+        DefaultListModel model = new DefaultListModel();
+        ResultSet rs = connect.print(" startTime, endTime ", " timetable ",
+                " startRegion ", startRe, " endRegion ", endRe);
 
+        while (rs.next()) {
+            if (rs.getString(1).indexOf(selectedDate) != -1) {
+                model.addElement(rs.getString(1) + "┃" + " " + "┃" + rs.getString(2));
+            }
+           // System.out.println(rs.getString(1));
+        }
+        //  rs.beforeFirst();
+        AddrerssList.setModel(model);
 
+        c.add(panel1);
+        c.setVisible(true);
+
+    }
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        new Time("Null","Null","Null","Null");
     }
 }

@@ -43,7 +43,8 @@ public class Bus {
 
         DefaultListModel model = new DefaultListModel();
 
-        ResultSet rs = connect.print(" * ", " timetable ", "Null", "Null");
+        ResultSet rs = connect.print(" * ", " timetable ",
+                "Null", "Null", "Null", "Null");
 
         while (rs.next()){
         model.addElement(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4)+ " " + rs.getString(5) + " " + rs.getString(6));

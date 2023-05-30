@@ -29,13 +29,15 @@ public class ReserveUi {
         String clientID = userID;
         DB connect = new DB();
         JFrame c = new JFrame();
+
         c.setSize(300, 350);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocation(550, 180);
         c.setTitle("버스 예매 프로그램");
 
         DefaultListModel model = new DefaultListModel();
-        ResultSet rs = connect.print(" distinct startRegion ", " timetable ", "Null", "Null");
+        ResultSet rs = connect.print(" distinct startRegion ", " timetable ",
+                "Null", "Null", "Null", "Null");
 
         while (rs.next()) {
             model.addElement(rs.getString(1));
@@ -87,20 +89,42 @@ public class ReserveUi {
                 AddrerssList.setModel(model);
             }
         });
-        // 검색하기
         AddrerssList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
-                    //model.clear();
                     String selectedValue = (String) AddrerssList.getSelectedValue();
-                    System.out.println(selectedValue);
-                    try {
 
-                        // 여기서 같은 행 출력 해야 됨
-                        ResultSet rs = connect.print(" distinct endRegion ", "timetable", "startRegion",selectedValue); // 이거 수정
+                    if(addressCount == 1){ // 도착지 선택시
+                        endRe = (String) AddrerssList.getSelectedValue();
+
+                        /////////////////////////////////////////////////////////////////////////////
+                        try {
+                            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    c.dispose();
+                                    System.out.println(userID + startRE + endRe);
+                                    new Calendar(userID, startRE, endRe);//
+
+                                }
+                            });
+                        } catch (Exception c) {
+                            c.printStackTrace();
+                        }
+                        //////////////////////////////////////////////////////////////////////////////
+                    }
+                    else if(addressCount == 0) { // 출발지 선택시
+                        startRE = (String) AddrerssList.getSelectedValue();
                         model.clear();
+                        addressCount++;
+                    }
+                    try {
+                        //출발지와 도착지가 같지 않을 경우만 출력
+                        ResultSet rs = connect.print(" distinct endRegion ", "timetable",
+                                "startRegion",selectedValue, "Null", "Null");
                         while (rs.next()) {
                             model.addElement(rs.getString(1));
                         }
@@ -111,14 +135,15 @@ public class ReserveUi {
 
                 }
             }
+
         });
+
             c.add(panel1);
             c.setVisible(true);
 
 
 
     }
-
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         new ReserveUi("dlgywjd");
     }
