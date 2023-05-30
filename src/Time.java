@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -29,9 +31,33 @@ public class Time {
             }
            // System.out.println(rs.getString(1));
         }
-        //  rs.beforeFirst();
         AddrerssList.setModel(model);
 
+        AddrerssList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
+                    String selectedValue = (String) AddrerssList.getSelectedValue();
+                  //  System.out.println(selectedValue);
+                    try {
+                        ResultSet rs = connect.print(" timeID, startTime, endTime ", " timetable ",
+                                " startRegion ", startRe, " endRegion ", endRe);
+                        while (rs.next()) {
+//                            System.out.println(rs.getString(2));
+//                            System.out.println(selectedValue);
+                            if (rs.getString(2).indexOf(selectedValue) != -1)  {
+                                System.out.println(rs.getString(1));
+//                                System.out.println(rs.getString(2));
+//                                System.out.println(rs.getString(3));
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
         c.add(panel1);
         c.setVisible(true);
 
