@@ -44,12 +44,10 @@ public class Time {
                         ResultSet rs = connect.print(" timeID, startTime, endTime ", " timetable ",
                                 " startRegion ", startRe, " endRegion ", endRe);
                         while (rs.next()) {
-//                            System.out.println(rs.getString(2));
-//                            System.out.println(selectedValue);
-                            if (rs.getString(2).indexOf(selectedValue) != -1)  {
+
+                            if ((selectedValue.indexOf(rs.getString(2)) != -1) && (selectedValue.indexOf(rs.getString(3)) != -1)) {
                                 System.out.println(rs.getString(1));
-//                                System.out.println(rs.getString(2));
-//                                System.out.println(rs.getString(3));
+
                             }
                         }
                     } catch (SQLException ex) {

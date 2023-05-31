@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -9,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Bus {
+public class Bus{
     private JPanel panel1;
     private JLabel Title;
     private JPanel Append;
@@ -30,6 +29,7 @@ public class Bus {
     private JTextField StratT;
     private JTextField EndT;
     private JTextField TimeID;
+    private JScrollBar scrollBar1;
     String tmp;
     public Bus() throws SQLException, ClassNotFoundException {
         DB connect = new DB();
