@@ -99,5 +99,28 @@ public class DB {
         JOptionPane.showMessageDialog(null, "로그인 실패");
         return false;
     }
+    public boolean checkReserve(String Id) throws SQLException {
+        String sql = "select reserveID from dbo.reserve where reserveID = ? ";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Id);
+        ResultSet rs = pstmt.executeQuery();
 
+        String search = "Null";
+        while (rs.next()) {
+            search = rs.getString(1);
+        }
+        if(search.equals("Null")){
+            return true;
+        }
+        return false;
+    }
+
+    public void updateSeat(String reserveID, String seatID, String busID) throws SQLException {
+        String sql = "update seat set reserveID = ? where seatID = ? and busID = ? ";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, reserveID);
+        pstmt.setString(2, seatID);
+        pstmt.setString(3, busID);
+        pstmt.executeQuery();
+    }
 }

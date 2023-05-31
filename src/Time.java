@@ -46,11 +46,15 @@ public class Time {
                         while (rs.next()) {
 
                             if ((selectedValue.indexOf(rs.getString(2)) != -1) && (selectedValue.indexOf(rs.getString(3)) != -1)) {
-                                System.out.println(rs.getString(1));
-
+                                String timeID = rs.getString(1);
+                                System.out.println(timeID);
+                                c.dispose();
+                                new SeatUi(userId, startRe, endRe, selectedDate, timeID);
                             }
                         }
                     } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

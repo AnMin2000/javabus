@@ -119,6 +119,7 @@
             </constraints>
             <properties>
               <background color="-9327168"/>
+              <enabled value="true"/>
               <text value="5"/>
             </properties>
           </component>
@@ -311,7 +312,8 @@
             </constraints>
             <properties>
               <background color="-67329"/>
-              <text value="Button"/>
+              <enabled value="true"/>
+              <text value="선택완료"/>
             </properties>
           </component>
         </children>

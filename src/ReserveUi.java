@@ -145,6 +145,6 @@ public class ReserveUi {
 
     }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        new ReserveUi("dlgywjd");
+        new ReserveUi("dksals");
     }
 }
