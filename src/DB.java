@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB {
     PreparedStatement pstmt;
@@ -121,6 +123,24 @@ public class DB {
         pstmt.setString(1, reserveID);
         pstmt.setString(2, seatID);
         pstmt.setString(3, busID);
-        pstmt.executeQuery();
+        pstmt.executeUpdate();
     }
+    public List<String> getReservedSeats() throws SQLException {
+        List<String> reservedSeats = new ArrayList<>();
+
+        String query = "SELECT seatID FROM seat WHERE reserveID IS NOT NULL ";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            String seatNumber = rs.getString("seatID");
+            reservedSeats.add(seatNumber);
+        }
+
+        rs.close();
+        pstmt.close();
+
+        return reservedSeats;
+    }
+
 }
