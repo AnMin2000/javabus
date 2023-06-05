@@ -36,6 +36,13 @@ public class MainUi {
                 }
             }
         });
+        InquiryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                new inquiry(userId);
+            }
+        });
         c.add(panel1);
         c.setVisible(true);
     }
