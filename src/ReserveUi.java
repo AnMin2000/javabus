@@ -32,7 +32,7 @@ public class ReserveUi {
 
         c.setSize(300, 350);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.setLocation(550, 180);
+        c.setLocationRelativeTo(null);
         c.setTitle("버스 예매 프로그램");
 
         DefaultListModel model = new DefaultListModel();

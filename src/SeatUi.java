@@ -3,6 +3,7 @@ import com.sun.tools.javac.Main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class SeatUi {
     private JButton button19;
     private JButton button20;
     private JButton append;
-    String buttonText = "1";
+    String buttonText;
 
     private List<String> clickedButtons;
     SeatUi(String userId, String startRe, String endRe, String selectedDate, String timeID) throws SQLException, ClassNotFoundException {
@@ -40,12 +41,13 @@ public class SeatUi {
         JFrame c = new JFrame();
         c.setSize(200, 400);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.setLocation(550, 180);
+        c.setLocationRelativeTo(null);
         c.setTitle("좌석 예약");
 
         List<String> reservedSeats = connect.getReservedSeats();// 이걸로 reserveSeats 얻어와서 마무리 지으면 됨
         // 디비에서는 받아 왔고 이걸로 버튼에 따라서 수정 해야 됨 그리고 버스 ID에 따라서 DB 새로 설정을 해야 됨
-        System.out.println(reservedSeats.toString());
+        //System.out.println(reservedSeats.toString());
+        buttonText = reservedSeats.toString();
         List<JButton> buttons = Arrays.asList(
                 button1, button2, button3, button4, button5,
                 button6, button7, button8, button9, button10,
@@ -84,17 +86,24 @@ public class SeatUi {
                     Object[] objectArray = clickedButtons.toArray();
 
                     String[] PrArr;
-                    String tmp = "@";
+                    String reserveID = "@";
                     try {
                         while (true) {
-                            if (!connect.checkReserve(tmp)) {
-                                tmp += "@";
+                            if (!connect.checkReserve(reserveID)) {
+                                reserveID += "@";
                             } else {
                                 // 예약 ID 비어 있으면 OK -> 버튼 클릭한 좌석 번호 두개 넣기,
-                                PrArr = new String[]{tmp, userId, timeID}; // 예약ID, 사용자ID, 예약버스번호
+                               //timeID로 셀렉해서 버스번호 뽑아오기
+                                ResultSet rs = connect.print("busID", "timetable","timeID",timeID,"Null","Null");
+                                rs.next();
+                                String VbusID = rs.getString(1);
+
+                                //System.out.println(rs.getString(1));
+                                PrArr = new String[]{reserveID, userId, timeID}; // 예약ID, 사용자ID, 예약버스번호
                                 connect.insert("reserve", 3, PrArr);
                                 for (int i = 0; i < objectArray.length - 1; i++) {
-                                    connect.updateSeat(tmp, (String) objectArray[i], "1");
+
+                                    connect.updateSeat(reserveID, (String) objectArray[i], VbusID);
                                 }
                                 break;
                             }

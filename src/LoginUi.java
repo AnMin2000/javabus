@@ -15,7 +15,7 @@ public class LoginUi {
         JFrame c = new JFrame();
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.setLocation(550,180);
+        c.setLocationRelativeTo(null);
         c.add(JPanel1);
         c.setVisible(true);
 

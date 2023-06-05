@@ -18,7 +18,7 @@ public class Time {
         JFrame c = new JFrame();
         c.setSize(300, 350);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.setLocation(550, 180);
+        c.setLocationRelativeTo(null);
         c.setTitle("시간 선택");
 
         DefaultListModel model = new DefaultListModel();
@@ -47,6 +47,7 @@ public class Time {
 
                             if ((selectedValue.indexOf(rs.getString(2)) != -1) && (selectedValue.indexOf(rs.getString(3)) != -1)) {
                                 String timeID = rs.getString(1);
+                                //
                                 System.out.println(timeID);
                                 c.dispose();
                                 new SeatUi(userId, startRe, endRe, selectedDate, timeID);

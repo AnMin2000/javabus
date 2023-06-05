@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,6 @@ public class Bus{
     private JTextField StratT;
     private JTextField EndT;
     private JTextField TimeID;
-    private JScrollBar scrollBar1;
     String tmp;
     public Bus() throws SQLException, ClassNotFoundException {
         DB connect = new DB();
@@ -38,8 +38,7 @@ public class Bus{
         c.setSize(800, 500);
 
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.setLocation(550, 180);
-
+        c.setLocationRelativeTo(null);
 
         DefaultListModel model = new DefaultListModel();
 
@@ -133,7 +132,6 @@ public class Bus{
                 AddrerssList.setModel(model);
             }
         });
-
 
         c.add(panel1);
 
