@@ -142,5 +142,22 @@ public class DB {
 
         return reservedSeats;
     }
+    public ResultSet join() throws SQLException {
+        //String sql = "select " + selectName + " from " + tableName + " inner join " + tableName2 + " on " + data + " = " + data2  + " WHERE " + data3 + " = '" + data4 + "'";
+
+        String sql = " select * from reserve r inner join timetable t on r.reserveBusID = t.timeID inner join seat s on r.reserveID = s.reserveID ";
+//t.startRegion,t.endRegion,t.startTime,t.endTime,s.seatID,s.price
+//        SELECT <열 목록>
+//        FROM <첫 번째 테이블>
+//                INNER JOIN <두 번째 테이블>
+//                ON <조인 조건>
+//        [WHERE 검색 조건]
+       // System.out.println(sql);
+
+        pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        return rs;
+    }
+
 
 }

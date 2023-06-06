@@ -16,7 +16,7 @@ public class Time {
 
         DB connect = new DB();
         JFrame c = new JFrame();
-        c.setSize(300, 350);
+        c.setSize(300, 180);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocationRelativeTo(null);
         c.setTitle("시간 선택");

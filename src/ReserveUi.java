@@ -30,7 +30,7 @@ public class ReserveUi {
         DB connect = new DB();
         JFrame c = new JFrame();
 
-        c.setSize(300, 350);
+        c.setSize(200, 250);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocationRelativeTo(null);
         c.setTitle("버스 예매 프로그램");
@@ -145,6 +145,6 @@ public class ReserveUi {
 
     }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        new ReserveUi("dksals");
+        new ReserveUi("dksthf");
     }
 }

@@ -40,7 +40,13 @@ public class MainUi {
             @Override
             public void actionPerformed(ActionEvent e) {
                 c.dispose();
-                new inquiry(userId);
+                try {
+                    new inquiry(userId);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         c.add(panel1);
