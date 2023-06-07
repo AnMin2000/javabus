@@ -20,10 +20,10 @@ public class inquiry {
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocationRelativeTo(null);
 
-        ResultSet rs = connect.join();
+        ResultSet rs = connect.join(userID);    // r.reserveID, startRegion, endRegion, startTime, endTime, seatID, price
 
         while(rs.next()) {
-            System.out.println(rs.getString(1));
+            System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5)+rs.getString(6)+rs.getString(7));
         }
 
 

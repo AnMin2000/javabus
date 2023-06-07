@@ -142,17 +142,18 @@ public class DB {
 
         return reservedSeats;
     }
-    public ResultSet join() throws SQLException {
-        //String sql = "select " + selectName + " from " + tableName + " inner join " + tableName2 + " on " + data + " = " + data2  + " WHERE " + data3 + " = '" + data4 + "'";
+    public ResultSet join(String vUserID) throws SQLException {
+        String sql = " SELECT r.reserveID, startRegion, endRegion, startTime, endTime, STUFF((SELECT ',' + seatID\n" +
+                " FROM seat s " +
+                " WHERE s.reserveID = r.reserveID " +
+                " FOR XML PATH('')), 1, 1, '') AS seatIDs, CAST(SUM(CAST(price AS INT)) AS VARCHAR) AS total_price " +
+                " FROM reserve r " +
+                " INNER JOIN timetable t ON r.reserveBusID = t.timeID " +
+                " INNER JOIN seat s ON r.reserveID = s.reserveID " +
+                " WHERE userID = '" + vUserID + "'" +
+                " GROUP BY r.reserveID, startRegion, endRegion, startTime, endTime;";
+        System.out.println(sql);
 
-        String sql = " select * from reserve r inner join timetable t on r.reserveBusID = t.timeID inner join seat s on r.reserveID = s.reserveID ";
-//t.startRegion,t.endRegion,t.startTime,t.endTime,s.seatID,s.price
-//        SELECT <열 목록>
-//        FROM <첫 번째 테이블>
-//                INNER JOIN <두 번째 테이블>
-//                ON <조인 조건>
-//        [WHERE 검색 조건]
-       // System.out.println(sql);
 
         pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
