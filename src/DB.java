@@ -143,7 +143,7 @@ public class DB {
         return reservedSeats;
     }
     public ResultSet join(String vUserID) throws SQLException {
-        String sql = " SELECT r.reserveID, startRegion, endRegion, startTime, endTime, STUFF((SELECT ',' + seatID\n" +
+        String sql = " SELECT r.reserveID, startRegion, endRegion, startTime, endTime, STUFF((SELECT ',' + seatID " +
                 " FROM seat s " +
                 " WHERE s.reserveID = r.reserveID " +
                 " FOR XML PATH('')), 1, 1, '') AS seatIDs, CAST(SUM(CAST(price AS INT)) AS VARCHAR) AS total_price " +

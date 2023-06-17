@@ -22,9 +22,45 @@ public class inquiry {
 
         ResultSet rs = connect.join(userID);    // r.reserveID, startRegion, endRegion, startTime, endTime, seatID, price
 
+
+
+        String[] VstartR = new String[100];
+        String[] VendR = new String[100];
+        String[] VstartT = new String[100];
+        String[] VendT = new String[100];
+        String[] VseatI = new String[100];
+        String[] Vprice = new String[100];
+
+        int i =0;
+
         while(rs.next()) {
-            System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5)+rs.getString(6)+rs.getString(7));
+
+            VstartR[i] = rs.getString(2);
+            VendR[i] = rs.getString(3);
+            VstartT[i] = rs.getString(4);
+            VendT[i] = rs.getString(5);
+            VseatI[i] = rs.getString(6);
+            Vprice[i] = rs.getString(7);
+
+            i++;
         }
+
+        String[] Vname = new String[100];
+        String[] Vphone = new String[100];
+
+        ResultSet rs2 = connect.print("name, phone","client","Null","Null","Null","Null");
+
+        int j =0;
+        while(rs2.next()) {
+            Vname[j] = rs2.getString(1);
+            Vphone[j] = rs2.getString(2);
+        }
+// r.reserveID, startRegion, endRegion, startTime, endTime, seatID, price
+        region.setText(VstartR[0] + " -> " + VendR[0]);
+        startT.setText(VstartT[0]);
+        endT.setText(VendT[0]);
+        nameNumber.setText(Vname[0] + Vphone[0]);
+        seat.setText(VseatI[0]);
 
 
         c.add(panel1);

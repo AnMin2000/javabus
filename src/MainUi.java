@@ -10,11 +10,7 @@ public class MainUi {
     private javax.swing.JPanel JPanel;
     private JButton ReserveButton;
     private JButton LoginButton;
-    private JButton ChangeButton;
-    private JButton PwButton;
-    private JButton CancleButton;
     private JButton InquiryButton;
-    private JButton ModifyButton;
     private JButton SignupButton;
 
     MainUi(String userId) {
@@ -42,6 +38,19 @@ public class MainUi {
                 c.dispose();
                 try {
                     new inquiry(userId);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        SignupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                try {
+                    new SignUpUi();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
