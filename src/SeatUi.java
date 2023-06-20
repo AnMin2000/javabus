@@ -86,24 +86,24 @@ public class SeatUi {
                     Object[] objectArray = clickedButtons.toArray();
 
                     String[] PrArr;
-                    String reserveID = "@";
+                    int reserveID = 1;
                     try {
                         while (true) {
                             if (!connect.checkReserve(reserveID)) {
-                                reserveID += "@";
+                                reserveID += 1;
                             } else {
                                 // 예약 ID 비어 있으면 OK -> 버튼 클릭한 좌석 번호 두개 넣기,
-                               //timeID로 셀렉해서 버스번호 뽑아오기
+                                //timeID로 셀렉해서 버스번호 뽑아오기
                                 ResultSet rs = connect.print("busID", "timetable","timeID",timeID,"Null","Null");
                                 rs.next();
                                 String VbusID = rs.getString(1);
 
                                 //System.out.println(rs.getString(1));
-                                PrArr = new String[]{reserveID, userId, timeID}; // 예약ID, 사용자ID, 예약버스번호
+                                PrArr = new String[]{String.valueOf(reserveID), userId, timeID}; // 예약ID, 사용자ID, 예약버스번호
                                 connect.insert("reserve", 3, PrArr);
                                 for (int i = 0; i < objectArray.length - 1; i++) {
 
-                                    connect.updateSeat(reserveID, (String) objectArray[i], VbusID);
+                                    connect.updateSeat(String.valueOf(reserveID), (String) objectArray[i], VbusID);
                                 }
                                 c.dispose();
                                 new MainUi(userId);

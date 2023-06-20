@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 
 public class MainUi {
@@ -13,6 +12,7 @@ public class MainUi {
     private JButton InquiryButton;
     private JButton SignupButton;
     private JButton admin;
+    private JButton CancelButton;
 
     MainUi(String userId) {
         JFrame c = new JFrame();
@@ -38,7 +38,7 @@ public class MainUi {
             public void actionPerformed(ActionEvent e) {
                 c.dispose();
                 try {
-                    new inquiry(userId);
+                    new F_inquiry(userId);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
@@ -70,8 +70,21 @@ public class MainUi {
             @Override
             public void actionPerformed(ActionEvent e) {
                 c.dispose();
-                new adminLogin();
+                new AdminUi();
 
+            }
+        });
+        CancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                try {
+                    new CancelUi(userId);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         c.add(panel1);

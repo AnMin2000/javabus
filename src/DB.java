@@ -77,7 +77,7 @@ public class DB {
             }
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "사용 가능 아이디");
-            return false;
+            return true;
         }
         return false;
     }
@@ -119,17 +119,17 @@ public class DB {
         }
         return false;
     }
-    public boolean checkReserve(String Id) throws SQLException {
+    public boolean checkReserve(int Id) throws SQLException {
         String sql = "select reserveID from dbo.reserve where reserveID = ? ";
         pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, Id);
+        pstmt.setInt(1, Id);
         ResultSet rs = pstmt.executeQuery();
 
-        String search = "Null";
+        int search = -1;
         while (rs.next()) {
-            search = rs.getString(1);
+            search = rs.getInt(1);
         }
-        if(search.equals("Null")){
+        if(search == -1){
             return true;
         }
         return false;
@@ -178,5 +178,12 @@ public class DB {
         return rs;
     }
 
+    public void Delete(int reserveID) throws SQLException {
+        String sql = " DELETE FROM reserve WHERE reserveID = ? ";
+        pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, reserveID);
+        pstmt.executeUpdate();
+    }
 
 }

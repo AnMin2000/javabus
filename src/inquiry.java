@@ -1,7 +1,8 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class inquiry {
     private JPanel panel1;
@@ -11,8 +12,9 @@ public class inquiry {
     private JLabel nameNumber;
     private JLabel seat;
     private JLabel endT;
+    private JButton BackButton;
 
-    inquiry(String userID) throws SQLException, ClassNotFoundException {
+    inquiry(String userID, String reserveID) throws SQLException, ClassNotFoundException {
         DB connect = new DB();
        // "<html><body><center>"+값1+"<br>"+값2+"</center></body></html>"
         JFrame c = new JFrame();
@@ -61,7 +63,13 @@ public class inquiry {
         endT.setText(VendT[0]);
         nameNumber.setText(Vname[0] + Vphone[0]);
         seat.setText(VseatI[0]);
-
+        BackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                new MainUi(userID);
+            }
+        });
 
         c.add(panel1);
         c.setVisible(true);
@@ -71,6 +79,6 @@ public class inquiry {
         //출발 지역 -> 도착지역
         //출발 시간 -> 도착시간
         //이름,전화번호//좌석,가격
-        new inquiry("dksals");
+        //new inquiry("dksejrrms");
     }
 }

@@ -3,14 +3,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class adminLogin {
+public class AdminUi {
     private JPanel JPanel1;
     private JLabel IdLabel;
     private JLabel PwLabel;
     private JTextField IdTextField;
     private JButton LoginButton;
     private JPasswordField PwTextField;
-    public adminLogin(){
+    public AdminUi(){
         JFrame c = new JFrame();
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +31,6 @@ public class adminLogin {
                     if(state == true){
                         c.dispose();
                         new Bus();
-
                     }
                     else {
                         return;
@@ -45,6 +44,6 @@ public class adminLogin {
         });
     }
     public static void main(String[] args){
-        new adminLogin();
+        new AdminUi();
     }
 }

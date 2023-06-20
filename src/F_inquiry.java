@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-public class ReserveUi {
-
+public class F_inquiry {
     private JPanel panel1;
+    private JLabel JName;
     private JPanel Look;
     private JPanel ListPanel;
     private JButton SortButton;
@@ -17,34 +17,28 @@ public class ReserveUi {
     private JList AddrerssList;
     private JButton SearchButton;
     private JTextField SearchTextField;
-    private JLabel JName;
-    private JLabel one;
-    String startRE;
-    String endRe;
-
-    int addressCount = 0;
-
-    ReserveUi(String userID) throws SQLException, ClassNotFoundException {
-
-        String clientID = userID;
+    F_inquiry(String userID) throws SQLException, ClassNotFoundException {
         DB connect = new DB();
         JFrame c = new JFrame();
 
-        c.setSize(200, 250);
+        c.setSize(430, 250);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocationRelativeTo(null);
-        c.setTitle("버스 예매 프로그램");
+        c.setTitle("예매 조회");
 
         DefaultListModel model = new DefaultListModel();
-        ResultSet rs = connect.print(" distinct startRegion ", " timetable ",
-                "Null", "Null", "Null", "Null");
-
-        while (rs.next()) {
-            model.addElement(rs.getString(1));
-            System.out.println(rs.getString(1));
-        }
-      //  rs.beforeFirst();
         AddrerssList.setModel(model);
+
+
+
+        try {
+            ResultSet rs = connect.join(userID);    // r.reserveID, startRegion, endRegion, startTime, endTime, seatID, price
+            while(rs.next()){
+                model.addElement("["+rs.getString(1)+"]" + rs.getString(2) + " -> " + rs.getString(3) + " | 시간 : " + rs.getString(4) + " " + rs.getString(5));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
 
         SortButton.addActionListener(new ActionListener() {
             @Override
@@ -95,56 +89,25 @@ public class ReserveUi {
 
                 if (e.getClickCount() == 2) { // 더블 클릭 이벤트 감지
                     String selectedValue = (String) AddrerssList.getSelectedValue();
+                    System.out.println(AddrerssList.getSelectedValue());
 
-                    if(addressCount == 1){ // 도착지 선택시
-                        endRe = (String) AddrerssList.getSelectedValue();
-
-                        /////////////////////////////////////////////////////////////////////////////
-                        try {
-                            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    c.dispose();
-                                    System.out.println(userID + startRE + endRe);
-                                    new Calendar(userID, startRE, endRe);//
-
-                                }
-                            });
-                        } catch (Exception c) {
-                            c.printStackTrace();
-                        }
-                        //////////////////////////////////////////////////////////////////////////////
-                    }
-                    else if(addressCount == 0) { // 출발지 선택시
-                        startRE = (String) AddrerssList.getSelectedValue();
-                        model.clear();
-                        addressCount++;
-                    }
+                    String reserveID = selectedValue.substring(selectedValue.indexOf('[') + 1, selectedValue.indexOf(']'));
                     try {
-                        //출발지와 도착지가 같지 않을 경우만 출력
-                        ResultSet rs = connect.print(" distinct endRegion ", "timetable",
-                                "startRegion",selectedValue, "Null", "Null");
-                        while (rs.next()) {
-                            model.addElement(rs.getString(1));
-                        }
-                        AddrerssList.setModel(model);
+                        c.dispose();
+                        new inquiry(userID,reserveID);
+
+
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
+                    System.out.println(reserveID);
 
                 }
             }
-
         });
-
-            c.add(panel1);
-            c.setVisible(true);
-
-
-
-    }
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        new ReserveUi("dksals");
+        c.add(panel1);
+        c.setVisible(true);
     }
 }
