@@ -17,6 +17,8 @@ public class F_inquiry {
     private JList AddrerssList;
     private JButton SearchButton;
     private JTextField SearchTextField;
+    private JButton BackButton;
+
     F_inquiry(String userID) throws SQLException, ClassNotFoundException {
         DB connect = new DB();
         JFrame c = new JFrame();
@@ -105,6 +107,13 @@ public class F_inquiry {
                     System.out.println(reserveID);
 
                 }
+            }
+        });
+        BackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                new MainUi(userID);
             }
         });
         c.add(panel1);

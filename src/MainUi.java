@@ -20,32 +20,37 @@ public class MainUi {
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocationRelativeTo(null);
         c.setTitle("버스 예매 프로그램");
-        ReserveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
+
+        if(!userId.equals("NULL")) {
+            ReserveButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        c.dispose();
+                        new ReserveUi(userId);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
+        if(!userId.equals("NULL")) {
+            InquiryButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     c.dispose();
-                    new ReserveUi(userId);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                    try {
+                        new F_inquiry(userId);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-            }
-        });
-        InquiryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                c.dispose();
-                try {
-                    new F_inquiry(userId);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
+            });
+        }
         SignupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,24 +79,26 @@ public class MainUi {
 
             }
         });
-        CancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                c.dispose();
-                try {
-                    new CancelUi(userId);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+        if(!userId.equals("NULL")) {
+            CancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    c.dispose();
+                    try {
+                        new CancelUi(userId);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-            }
-        });
+            });
+        }
         c.add(panel1);
         c.setVisible(true);
     }
 
     public static void main(String[] args) {
-        new MainUi("dlgywjd");
+        new MainUi("NULL");
     }
 }
