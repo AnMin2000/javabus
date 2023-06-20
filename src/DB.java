@@ -63,42 +63,60 @@ public class DB {
 
         return rs;
     }
-
-
-    public ResultSet selectUser(String Id) throws SQLException {
-        String sql = "select * from dbo.client where userID = ?";
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, Id);
-        ResultSet rs = pstmt.executeQuery();
-
-        return rs;
-    }
     public boolean Overlap(String ID) throws SQLException {
-
-        ResultSet rs = selectUser(ID);
-
-        while (rs.next()) {
+        try {
+            String sql = "select * from dbo.client where userID = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, ID);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
             //System.out.println(rs.getString(2));
             if (rs.getString(1).equals(ID)) {
                 JOptionPane.showMessageDialog(null, "아이디 중복");
                 return false;
             }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "사용 가능 아이디");
+            return false;
         }
-        JOptionPane.showMessageDialog(null, "사용 가능 아이디");
-        return true;
+        return false;
     }
 
 
     public boolean Login(String Id, String Pw) throws SQLException {
+        try {
+            String sql = "select * from dbo.client where userID = ? and pwd = ? ";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Id);
+            pstmt.setString(2, Pw);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
 
-        ResultSet rs = selectUser(Id);
-        while (rs.next()) {
-            if (rs.getString(2).equals(Pw)) {
+            if ((rs.getString(1)).equals(Id) && rs.getString(2).equals(Pw)) {
                 JOptionPane.showMessageDialog(null, "로그인 성공");
                 return true;
             }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "로그인 실패");
+            return false;
         }
-        JOptionPane.showMessageDialog(null, "로그인 실패");
+        return false;
+    }
+    public boolean AdminLogin(String Id, String Pw) throws SQLException{
+        try {
+            String sql = "select * from dbo.admin where adminID = ? and pwd = ? ";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Id);
+            pstmt.setString(2, Pw);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            if (!(rs.getString(1)).equals("Null")) {
+                return true;
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "로그인 실패");
+            return false;
+        }
         return false;
     }
     public boolean checkReserve(String Id) throws SQLException {

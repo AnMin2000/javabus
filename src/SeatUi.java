@@ -105,6 +105,8 @@ public class SeatUi {
 
                                     connect.updateSeat(reserveID, (String) objectArray[i], VbusID);
                                 }
+                                c.dispose();
+                                new MainUi(userId);
                                 break;
                             }
                         }

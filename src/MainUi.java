@@ -12,6 +12,7 @@ public class MainUi {
     private JButton LoginButton;
     private JButton InquiryButton;
     private JButton SignupButton;
+    private JButton admin;
 
     MainUi(String userId) {
         JFrame c = new JFrame();
@@ -56,6 +57,21 @@ public class MainUi {
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        LoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                new LoginUi();
+            }
+        });
+        admin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.dispose();
+                new adminLogin();
+
             }
         });
         c.add(panel1);
